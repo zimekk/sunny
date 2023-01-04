@@ -1,11 +1,69 @@
+import type { InferGetStaticPropsType, GetStaticProps } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
+import { format } from 'date-fns'
 import styles from '../styles/Home.module.css'
+
+import type {Weather} from './api/weather'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Home() {
+// https://www.amcharts.com/free-animated-svg-weather-icons/
+// https://github.com/bobangajicsm/react-weather-app/tree/main/public/icons
+// https://openweathermap.org/weather-conditions
+function Icon({icon}: {icon: string}) {
+return (
+  <Image
+    className={styles.logo}
+    // src={`/icons/${icon}.png`}
+    src={`${process.env.NEXT_PUBLIC_URL}/img/wn/${icon}@4x.png`}
+    alt="Weather"
+    width={100}
+    height={100}
+    priority
+  />
+)
+}
+
+// https://github.com/bobangajicsm/react-weather-app
+function CurrentWeather({main, name, sys, weather}: Weather) {
+  return (
+    <div>
+      <div>{format(Date.now(), 'do MMMM yyyy')}</div>
+      <div style={{fontSize: 'xx-large'}}><a href={`${process.env.NEXT_PUBLIC_URL}/city/756135`}
+            target={"_blank"}
+            rel={"noopener noreferrer"}
+      >{`${name}, ${sys.country}`}</a></div>
+      <div style={{
+        display: 'flex',
+        alignItems: 'center'
+      }}>
+      {weather.map(({icon}, key) => (
+<Icon key={key} icon={icon}/>
+))}
+    <div>
+      <div style={{fontSize: 'xx-large'}}>{main.temp}°C</div>
+      <div>(feels_like: {main.feels_like}°C)</div>
+</div>
+      </div>
+      <div>humidity: {main.humidity}%,</div>
+      <div>pressure: {main.pressure}hPa</div>
+    </div>
+    )
+}
+
+export const getStaticProps: GetStaticProps<{ weather: Weather }> = async () => {
+  const res = await fetch(`${process.env.API}/api/weather`)
+  const weather = await res.json()
+  return {
+    props: {
+      weather,
+    },
+  }
+}
+
+export default function Home({weather}: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
       <Head>
@@ -15,6 +73,10 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
+
+<CurrentWeather {...weather} />
+
+        {false &&
         <div className={styles.description}>
           <p>
             Get started by editing&nbsp;
@@ -38,8 +100,10 @@ export default function Home() {
             </a>
           </div>
         </div>
+}
 
-        <div className={styles.center}>
+{false &&
+  <div className={styles.center}>
           <Image
             className={styles.logo}
             src="/next.svg"
@@ -58,7 +122,9 @@ export default function Home() {
             />
           </div>
         </div>
+      }
 
+{false &&
         <div className={styles.grid}>
           <a
             href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
@@ -117,6 +183,7 @@ export default function Home() {
             </p>
           </a>
         </div>
+}
       </main>
     </>
   )
