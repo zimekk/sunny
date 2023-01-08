@@ -7,7 +7,6 @@ import { format } from "date-fns";
 import styles from "../styles/Home.module.css";
 
 import type { Weather } from "./api/weather";
-import { relative } from "path";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,7 +18,7 @@ function Icon({ icon }: { icon: string }) {
     <Image
       className={styles.logo}
       // src={`/icons/${icon}.png`}
-      src={`${process.env.NEXT_PUBLIC_URL}/img/wn/${icon}@4x.png`}
+      src={`https://openweathermap.org/img/wn/${icon}@4x.png`}
       alt="Weather"
       width={100}
       height={100}
@@ -35,7 +34,7 @@ function CurrentWeather({ main, name, sys, weather }: Weather) {
       <div>{format(Date.now(), "do MMMM yyyy")}</div>
       <div style={{ fontSize: "xx-large" }}>
         <a
-          href={`${process.env.NEXT_PUBLIC_URL}/city/756135`}
+          href={`https://openweathermap.org/city/756135`}
           target={"_blank"}
           rel={"noopener noreferrer"}
         >{`${name}, ${sys.country}`}</a>
@@ -144,20 +143,36 @@ function Clock() {
 }
 
 export const getStaticProps: GetStaticProps<{
-  weather: Weather;
+  // weather: Weather;
 }> = async () => {
-  const res = await fetch(`${process.env.API}/api/weather`);
-  const weather = await res.json();
+  // const res = await fetch(`${process.env.API}/api/weather`);
+  // const weather = await res.json();
   return {
     props: {
-      weather,
+      // weather,
     },
   };
 };
 
-export default function Home({
-  weather,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
+function Loading() {
+  return <div>Loading...</div>;
+}
+
+export default function Home(
+  props: InferGetStaticPropsType<typeof getStaticProps>
+) {
+  const [weather, setData] = useState<Weather | null>(null);
+
+  useEffect(() => {
+    fetch("/api/weather")
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data);
+      });
+  }, []);
+
+  if (weather === null) return <Loading />;
+
   return (
     <>
       <Head>
