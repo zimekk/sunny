@@ -11,7 +11,9 @@ export default function Clock() {
     };
   }, []);
 
-  const [hour, minute, second] = format(time, "H:m:s").split(":").map(Number);
+  const [hour, minute, second] = format(time, "HH:mm:ss")
+    .split(":")
+    .map(Number);
 
   return (
     <div

@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction, useState } from "react";
+import { format } from "date-fns";
 import {
   useObservable,
   pluckFirst,
@@ -25,17 +26,15 @@ import {
 type State = "started" | "paused" | "reset";
 
 // https://observable-hooks.js.org/examples/pomodoro-timer-rxjs7.html
-export const Clock = ({ seconds }: { seconds: number }) => {
-  const restMinutes = ~~(seconds / 60) % 60;
-  const restSeconds = (seconds - restMinutes * 60) % 60;
+function Clock({ seconds }: { seconds: number }) {
   return (
-    <div>
-      {restMinutes}:{restSeconds}
+    <div style={{ fontSize: "xx-large" }}>
+      {format(seconds * 1000, "mm:ss")}
     </div>
   );
-};
+}
 
-const pomodoroSeconds = 1 * 60;
+const pomodoroSeconds = 1.5 * 60;
 
 export const Timer = ({ state }: { state: State }) => {
   const timerState$ = useObservable(pluckFirst, [state]);
@@ -51,7 +50,7 @@ export const Timer = ({ state }: { state: State }) => {
             of(animationFrameScheduler.now(), animationFrameScheduler).pipe(
               repeat(),
               // extract seconds
-              map((startTime) => ~~((Date.now() - startTime) / 1000)),
+              map((startTime) => Math.floor((Date.now() - startTime) / 1000)),
               distinctUntilChanged(),
               // pause implementation
               withLatestFrom(timerState$),
@@ -77,8 +76,6 @@ export const TimerBtnGroup = ({
 }) => (
   <div>
     <button
-      className="button is-dark is-large"
-      aria-label="Start count down"
       style={{ margin: 5 }}
       disabled={state === "started"}
       onClick={() => onChange("started")}
@@ -86,20 +83,13 @@ export const TimerBtnGroup = ({
       <FontAwesomeIcon icon={faPlayCircle} />
     </button>
     <button
-      className="button is-dark is-large"
-      aria-label="Pause count down"
       style={{ margin: 5 }}
       disabled={state !== "started"}
       onClick={() => onChange("paused")}
     >
       <FontAwesomeIcon icon={faPauseCircle} />
     </button>
-    <button
-      className="button is-dark is-large"
-      aria-label="Reset count down"
-      style={{ margin: 5 }}
-      onClick={() => onChange("reset")}
-    >
+    <button style={{ margin: 5 }} onClick={() => onChange("reset")}>
       <FontAwesomeIcon icon={faUndo} />
     </button>
   </div>
@@ -112,22 +102,23 @@ export const Title = ({ state }: { state: State }) => {
       : state === "paused"
       ? "Never quite, keep going!!"
       : "Let the countdown begin!!";
-  return <h2 className="title is-6">{title}</h2>;
+  return <div>{title}</div>;
 };
 
-export default function () {
-  const [timerState, updateState] = useState<State>("reset");
+export default function App() {
+  const [state, setState] = useState<State>("reset");
 
   return (
     <div
       style={{
         display: "flex",
         alignItems: "center",
+        flexDirection: "column",
       }}
     >
-      <Title state={timerState} />
-      <Timer state={timerState} />
-      <TimerBtnGroup state={timerState} onChange={updateState} />
+      <Title state={state} />
+      <Timer state={state} />
+      <TimerBtnGroup state={state} onChange={setState} />
     </div>
   );
 }
