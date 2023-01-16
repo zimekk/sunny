@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useCallback, useRef, useState } from "react";
 import { format } from "date-fns";
 import {
   useObservable,
@@ -14,6 +14,7 @@ import {
   withLatestFrom,
   scan,
   take,
+  tap,
 } from "rxjs/operators";
 import { of, animationFrameScheduler } from "rxjs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -34,9 +35,23 @@ function Clock({ seconds }: { seconds: number }) {
   );
 }
 
-const pomodoroSeconds = 1.5 * 60;
+const pomodoroSeconds = 1.05 * 60;
 
 export const Timer = ({ state }: { state: State }) => {
+  const refTick = useRef<HTMLAudioElement>(null);
+  const refAlarm = useRef<HTMLAudioElement>(null);
+
+  const playTick = useCallback(() => {
+    if (refTick.current) {
+      refTick.current.play();
+    }
+  }, [refTick]);
+  const playAlarm = useCallback(() => {
+    if (refAlarm.current) {
+      refAlarm.current.play();
+    }
+  }, [refAlarm]);
+
   const timerState$ = useObservable(pluckFirst, [state]);
   const countDown$ = useObservable(() =>
     timerState$.pipe(
@@ -58,13 +73,30 @@ export const Timer = ({ state }: { state: State }) => {
               // time's up!
               take(pomodoroSeconds),
               // count how many second left
-              scan((timeLeft) => timeLeft - 1, pomodoroSeconds)
+              scan((timeLeft) => timeLeft - 1, pomodoroSeconds),
+              tap((timeLeft) => (timeLeft > 0 ? playTick() : playAlarm()))
             )
       )
     )
   );
   const seconds = useObservableState(countDown$, pomodoroSeconds);
-  return <Clock seconds={seconds} />;
+  return (
+    <div>
+      {/* https://freesound.org/people/Rudmer_Rotteveel/sounds/536420/ */}
+      <audio
+        ref={refAlarm}
+        src="/audio/536420_4921277-lq.ogg"
+        autoPlay={false}
+      />
+      {/* https://freesound.org/people/malle99/sounds/496760/ */}
+      <audio
+        ref={refTick}
+        src="/audio/496760_6712901-lq.ogg"
+        autoPlay={false}
+      />
+      <Clock seconds={seconds} />
+    </div>
+  );
 };
 
 export const TimerBtnGroup = ({
