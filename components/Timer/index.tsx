@@ -26,16 +26,34 @@ import {
 
 type State = "started" | "paused" | "reset";
 
+// https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis
+// https://mdn.github.io/web-speech-api/speak-easy-synthesis/
+async function speak(text: string) {
+  speechSynthesis.speak(
+    Object.assign(new SpeechSynthesisUtterance(), {
+      // msg.volume = 1; // 0 to 1
+      // msg.rate = 1; // 0.1 to 10
+      // msg.pitch = 1; //0 to 2
+      // msg.lang = this.DEST_LANG;
+      text,
+      onend: () => console.log("SPEECH_DONE"),
+    })
+  );
+}
+
 // https://observable-hooks.js.org/examples/pomodoro-timer-rxjs7.html
 function Clock({ seconds }: { seconds: number }) {
   return (
-    <div style={{ fontSize: "xx-large" }}>
+    <div style={{ fontSize: "xxx-large" }}>
       {format(seconds * 1000, "mm:ss")}
     </div>
   );
 }
 
-const pomodoroSeconds = 1.05 * 60;
+// const pomodoroSeconds = 33, ticksPerSecond = 3;
+// const pomodoroSeconds = 18, ticksPerSecond = 3;
+const pomodoroSeconds = 65,
+  ticksPerSecond = 1;
 
 export const Timer = ({ state }: { state: State }) => {
   const refTick = useRef<HTMLAudioElement>(null);
@@ -65,7 +83,9 @@ export const Timer = ({ state }: { state: State }) => {
             of(animationFrameScheduler.now(), animationFrameScheduler).pipe(
               repeat(),
               // extract seconds
-              map((startTime) => Math.floor((Date.now() - startTime) / 1000)),
+              map((startTime) =>
+                Math.floor((Date.now() - startTime) / 1000 / ticksPerSecond)
+              ),
               distinctUntilChanged(),
               // pause implementation
               withLatestFrom(timerState$),
@@ -74,6 +94,23 @@ export const Timer = ({ state }: { state: State }) => {
               take(pomodoroSeconds),
               // count how many second left
               scan((timeLeft) => timeLeft - 1, pomodoroSeconds),
+              tap((timeLeft) => {
+                const text = {
+                  62: "uwaga!",
+                  60: "start!",
+                  30: "połowa czasu!",
+                  5: "pięć...",
+                  4: "cztery...",
+                  3: "trzy...",
+                  2: "dwa...",
+                  1: "jeden...",
+                  0: "koniec! ... czas na przerwę...",
+                }[timeLeft];
+                console.log({ timeLeft, text });
+                if (text) {
+                  speak(text);
+                }
+              }),
               tap((timeLeft) => (timeLeft > 0 ? playTick() : playAlarm()))
             )
       )
