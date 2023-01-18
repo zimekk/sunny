@@ -50,10 +50,12 @@ function Clock({ seconds }: { seconds: number }) {
   );
 }
 
-// const pomodoroSeconds = 33, ticksPerSecond = 3;
-// const pomodoroSeconds = 18, ticksPerSecond = 3;
-const pomodoroSeconds = 65,
+const ticks = 90,
+  start = 5,
   ticksPerSecond = 1;
+// const ticks = 30, start = 3, ticksPerSecond = 3;
+// const ticks = 15, start = 3, ticksPerSecond = 3;
+const pomodoroSeconds = ticks + start;
 
 export const Timer = ({ state }: { state: State }) => {
   const refTick = useRef<HTMLAudioElement>(null);
@@ -96,9 +98,9 @@ export const Timer = ({ state }: { state: State }) => {
               scan((timeLeft) => timeLeft - 1, pomodoroSeconds),
               tap((timeLeft) => {
                 const text = {
-                  62: "uwaga!",
-                  60: "start!",
-                  30: "połowa czasu!",
+                  [ticks + 2]: "uwaga!",
+                  [ticks]: "start!",
+                  [Math.floor(ticks / 2)]: "połowa czasu!",
                   5: "pięć...",
                   4: "cztery...",
                   3: "trzy...",
