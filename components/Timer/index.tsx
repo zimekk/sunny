@@ -1,28 +1,36 @@
-import { Dispatch, SetStateAction, useCallback, useRef, useState } from "react";
+import {
+  faPauseCircle,
+  faPlayCircle,
+  faUndo,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { format } from "date-fns";
 import {
-  useObservable,
   pluckFirst,
+  useObservable,
   useObservableState,
 } from "observable-hooks";
 import {
-  map,
-  filter,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+  type ChangeEventHandler,
+  type Dispatch,
+  type SetStateAction,
+} from "react";
+import { animationFrameScheduler, of } from "rxjs";
+import {
   distinctUntilChanged,
-  switchMap,
+  filter,
+  map,
   repeat,
-  withLatestFrom,
   scan,
+  switchMap,
   take,
   tap,
+  withLatestFrom,
 } from "rxjs/operators";
-import { of, animationFrameScheduler } from "rxjs";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPlayCircle,
-  faPauseCircle,
-  faUndo,
-} from "@fortawesome/free-solid-svg-icons";
 
 type State = "started" | "paused" | "reset";
 
@@ -50,14 +58,17 @@ function Clock({ seconds }: { seconds: number }) {
   );
 }
 
-const ticks = 90,
-  start = 5,
-  ticksPerSecond = 1;
-// const ticks = 30, start = 3, ticksPerSecond = 3;
-// const ticks = 15, start = 3, ticksPerSecond = 3;
-const pomodoroSeconds = ticks + start;
-
-export const Timer = ({ state }: { state: State }) => {
+export const Timer = ({
+  state,
+  pomodoroSeconds,
+  ticks,
+  ticksPerSecond,
+}: {
+  state: State;
+  pomodoroSeconds: number;
+  ticks: number;
+  ticksPerSecond: number;
+}) => {
   const refTick = useRef<HTMLAudioElement>(null);
   const refAlarm = useRef<HTMLAudioElement>(null);
 
@@ -176,8 +187,29 @@ export const Title = ({ state }: { state: State }) => {
   return <div>{title}</div>;
 };
 
+const CONFIG = {
+  "300_1": [300, 5, 1],
+  "270_1": [270, 5, 1],
+  "240_1": [240, 5, 1],
+  "210_1": [210, 5, 1],
+  "180_1": [180, 5, 1],
+  "150_1": [150, 5, 1],
+  "120_1": [120, 5, 1],
+  "090_1": [90, 5, 1],
+  "060_1": [60, 5, 1],
+  "030_1": [30, 5, 1],
+  "030_3": [30, 3, 3],
+  "015_3": [15, 3, 3],
+} as const;
+
 export default function App() {
   const [state, setState] = useState<State>("reset");
+  const [config, setConfig] = useState(() => "120_1");
+  const [ticks, start, ticksPerSecond] = useMemo(
+    () => CONFIG[config as keyof typeof CONFIG],
+    [config]
+  );
+  const pomodoroSeconds = ticks + start;
 
   return (
     <div
@@ -187,8 +219,29 @@ export default function App() {
         flexDirection: "column",
       }}
     >
+      <label>
+        <select
+          value={config}
+          onChange={useCallback<ChangeEventHandler<HTMLSelectElement>>(
+            ({ target }) => setConfig(target.value),
+            []
+          )}
+        >
+          {Object.entries(CONFIG).map(([value, label]) => (
+            <option key={value} value={value}>
+              {label[2] === 1 ? `${label[0]}s` : `${label[0]} x ${label[2]}s`}
+            </option>
+          ))}
+        </select>
+      </label>
       <Title state={state} />
-      <Timer state={state} />
+      <Timer
+        key={config}
+        state={state}
+        pomodoroSeconds={pomodoroSeconds}
+        ticks={ticks}
+        ticksPerSecond={ticksPerSecond}
+      />
       <TimerBtnGroup state={state} onChange={setState} />
     </div>
   );
