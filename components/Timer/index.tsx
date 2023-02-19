@@ -12,6 +12,7 @@ import {
 } from "observable-hooks";
 import {
   useCallback,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -56,6 +57,39 @@ function Clock({ seconds }: { seconds: number }) {
       {format(seconds * 1000, "mm:ss")}
     </div>
   );
+}
+
+// https://developer.mozilla.org/en-US/docs/Web/API/Screen_Wake_Lock_API
+// https://github.com/jorisre/react-screen-wake-lock
+function ScreenWakeLock() {
+  // Create a reference for the Wake Lock.
+  const wakeLock = useRef<WakeLockSentinel | null>();
+
+  useEffect(() => {
+    (async () => {
+      if ("wakeLock" in navigator && wakeLock.current === undefined) {
+        // create an async function to request a wake lock
+        try {
+          wakeLock.current = null;
+          wakeLock.current = await navigator.wakeLock.request("screen");
+          wakeLock.current.addEventListener("release", () => {
+            console.log("Wake Lock is released!");
+          });
+          console.log("Wake Lock is active!");
+        } catch (err) {
+          // The Wake Lock request has failed - usually system related, such as battery.
+          console.log({ err });
+        }
+      }
+    })();
+
+    return () => {
+      if (wakeLock.current) {
+        wakeLock.current.release();
+      }
+    };
+  }, [wakeLock]);
+  return null;
 }
 
 export const Timer = ({
@@ -243,6 +277,7 @@ export default function App() {
         ticksPerSecond={ticksPerSecond}
       />
       <TimerBtnGroup state={state} onChange={setState} />
+      {state === "started" && <ScreenWakeLock />}
     </div>
   );
 }
