@@ -92,6 +92,47 @@ function ScreenWakeLock() {
   return null;
 }
 
+const R = 48;
+const P = 2 * Math.PI * R;
+
+// https://codepen.io/evth/pen/zBNqrL
+// https://stackoverflow.com/questions/44006664/the-calculation-behind-progress-circle-using-dasharray-and-dashoffset
+function Progress({ percentage }: { percentage: number }) {
+  return (
+    <svg
+      style={{
+        position: "absolute",
+        top: -50,
+        left: -20,
+        width: 150,
+        height: 150,
+        zIndex: -1,
+      }}
+      viewBox="0 0 100 100"
+    >
+      <linearGradient id="linear" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#2ed8a7"></stop>
+        <stop offset="100%" stop-color="#a6ceff"></stop>
+      </linearGradient>
+      <circle
+        stroke-linecap="round"
+        cx="50"
+        cy="50"
+        r={R}
+        stroke="url(#linear)"
+        stroke-width="4"
+        fill="none"
+        stroke-dasharray={`${percentage * P} ${P}`}
+        stroke-mitterlimit="0"
+        transform="rotate(-90 ) translate(-100 0)"
+        style={{
+          transition: "stroke-dasharray .05s",
+        }}
+      ></circle>
+    </svg>
+  );
+}
+
 export const Timer = ({
   state,
   pomodoroSeconds,
@@ -165,7 +206,7 @@ export const Timer = ({
   );
   const seconds = useObservableState(countDown$, pomodoroSeconds);
   return (
-    <div>
+    <div style={{ position: "relative" }}>
       {/* https://freesound.org/people/Rudmer_Rotteveel/sounds/536420/ */}
       <audio
         ref={refAlarm}
@@ -179,6 +220,7 @@ export const Timer = ({
         autoPlay={false}
       />
       <Clock seconds={seconds} />
+      <Progress percentage={1 - seconds / pomodoroSeconds} />
     </div>
   );
 };
