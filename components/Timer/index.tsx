@@ -111,18 +111,18 @@ function Progress({ percentage }: { percentage: number }) {
       viewBox="0 0 100 100"
     >
       <linearGradient id="linear" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%" stop-color="#2ed8a7"></stop>
-        <stop offset="100%" stop-color="#a6ceff"></stop>
+        <stop offset="0%" stopColor="#2ed8a7"></stop>
+        <stop offset="100%" stopColor="#a6ceff"></stop>
       </linearGradient>
       <circle
-        stroke-linecap="round"
+        strokeLinecap="round"
         cx="50"
         cy="50"
         r={R}
         stroke="url(#linear)"
-        stroke-width="4"
+        strokeWidth="4"
         fill="none"
-        stroke-dasharray={`${percentage * P} ${P}`}
+        strokeDasharray={`${percentage * P} ${P}`}
         stroke-mitterlimit="0"
         transform="rotate(-90 ) translate(-100 0)"
         style={{
@@ -273,14 +273,16 @@ const CONFIG = {
   "120_1": [120, 5, 1],
   "090_1": [90, 5, 1],
   "060_1": [60, 5, 1],
+  "045_1": [45, 5, 1],
   "030_1": [30, 5, 1],
+  "030_2": [30, 3, 2],
   "030_3": [30, 3, 3],
   "015_3": [15, 3, 3],
 } as const;
 
 export default function App() {
   const [state, setState] = useState<State>("reset");
-  const [config, setConfig] = useState(() => "120_1");
+  const [config, setConfig] = useState(() => "180_1");
   const [ticks, start, ticksPerSecond] = useMemo(
     () => CONFIG[config as keyof typeof CONFIG],
     [config]
