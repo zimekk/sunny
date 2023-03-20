@@ -2,7 +2,7 @@ import type { InferGetStaticPropsType, GetStaticProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { Inter } from "@next/font/google";
+import { Inter } from "next/font/google";
 import { format } from "date-fns";
 import Clock from "../components/Clock";
 import Timer from "../components/Timer";
