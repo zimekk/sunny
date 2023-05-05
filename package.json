@@ -13,14 +13,11 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "NEXT_TELEMETRY_DISABLED=1 next start",
     "lint": "next lint",
-    "dedupe": "yarn-deduplicate && yarn",
-    "dedupe:list": "yarn-deduplicate --list",
-    "update": "yarn upgrade-interactive",
-    "update:dedupe": "yarn-deduplicate && yarn",
-    "update:latest": "yarn upgrade-interactive --latest",
-    "prepare": "husky install"
+    "update:dedupe": "pnpm dedupe",
+    "update:latest": "pnpm update --interactive --latest",
+    "prepare": "husky install && next telemetry disable"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
