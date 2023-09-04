@@ -65,11 +65,11 @@ devDependencies:
     specifier: ^8.0.2
     version: 8.0.3
   prettier:
-    specifier: ^3.0.0
-    version: 3.0.0
+    specifier: ^2.8.7
+    version: 2.8.8
   pretty-quick:
     specifier: ^3.1.3
-    version: 3.1.3(prettier@3.0.0)
+    version: 3.1.3(prettier@2.8.8)
   type-coverage:
     specifier: ^2.25.0
     version: 2.25.2(typescript@5.0.4)
@@ -2714,13 +2714,13 @@ packages:
     engines: {node: '>= 0.8.0'}
     dev: true
 
-  /prettier@3.0.0:
-    resolution: {integrity: sha512-zBf5eHpwHOGPC47h0zrPyNn+eAEIdEzfywMoYn2XPi0P44Zp0tSq64rq0xAREh4auw2cJZHo9QUob+NqCQky4g==}
-    engines: {node: '>=14'}
+  /prettier@2.8.8:
+    resolution: {integrity: sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==}
+    engines: {node: '>=10.13.0'}
     hasBin: true
     dev: true
 
-  /pretty-quick@3.1.3(prettier@3.0.0):
+  /pretty-quick@3.1.3(prettier@2.8.8):
     resolution: {integrity: sha512-kOCi2FJabvuh1as9enxYmrnBC6tVMoVOenMaBqRfsvBHB0cbpYHjdQEpSglpASDFEXVwplpcGR4CLEaisYAFcA==}
     engines: {node: '>=10.13'}
     hasBin: true
@@ -2733,7 +2733,7 @@ packages:
       ignore: 5.2.4
       mri: 1.2.0
       multimatch: 4.0.0
-      prettier: 3.0.0
+      prettier: 2.8.8
     dev: true
 
   /prop-types@15.8.1:
