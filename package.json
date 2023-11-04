@@ -16,8 +16,11 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "clean": "rm -rf .next",
     "start": "NEXT_TELEMETRY_DISABLED=1 next start",
     "lint": "next lint",
+    "reset": "pnpm store prune && rm -rf node_modules apps/*/node_modules packages/*/node_modules",
+    "update:browserlist": "pnpm update caniuse-lite -r",
     "update:dedupe": "pnpm dedupe",
     "update:latest": "pnpm update --interactive --latest",
     "prepare": "husky install && next telemetry disable"
@@ -47,7 +50,6 @@
     "lint-staged": "^15.0.2",
     "prettier": "^3.0.0",
     "type-coverage": "^2.25.0",
-    "typescript": "^5.0.2",
-    "yarn-deduplicate": "^6.0.1"
+    "typescript": "^5.0.2"
   }
 }
