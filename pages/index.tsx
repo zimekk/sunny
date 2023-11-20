@@ -78,7 +78,7 @@ function Loading() {
 }
 
 export default function Home(
-  props: InferGetStaticPropsType<typeof getStaticProps>
+  props: InferGetStaticPropsType<typeof getStaticProps>,
 ) {
   const [weather, setData] = useState<Weather | null>(null);
 
@@ -103,7 +103,36 @@ export default function Home(
       <main className={styles.main}>
         <CurrentWeather {...weather} />
         <Clock />
-        <Timer />
+        <Timer
+          configList={{
+            "300_1": [300, 5, 1],
+            "270_1": [270, 5, 1],
+            "240_1": [240, 5, 1],
+            "210_1": [210, 5, 1],
+            "180_1": [180, 5, 1],
+            "150_1": [150, 5, 1],
+            "120_1": [120, 5, 1],
+            "100_1": [100, 5, 1],
+            "090_1": [90, 5, 1],
+            "060_1": [60, 5, 1],
+            "045_1": [45, 5, 1],
+            "030_1": [30, 5, 1],
+            "030_2": [30, 3, 2],
+            "030_3": [30, 3, 3],
+            "015_1": [15, 5, 1],
+            "015_3": [15, 3, 3],
+          }}
+        />
+        <Timer
+          configList={{
+            "900_1": [900, 0, 1],
+            "600_1": [600, 0, 1],
+            "300_1": [300, 0, 1],
+            "120_1": [120, 0, 1],
+            "060_1": [60, 0, 1],
+          }}
+          config="600_1"
+        />
 
         {false && (
           <div className={styles.description}>

@@ -46,7 +46,7 @@ async function speak(text: string) {
       // msg.lang = this.DEST_LANG;
       text,
       onend: () => console.log("SPEECH_DONE"),
-    })
+    }),
   );
 }
 
@@ -172,7 +172,7 @@ export const Timer = ({
               repeat(),
               // extract seconds
               map((startTime) =>
-                Math.floor((Date.now() - startTime) / 1000 / ticksPerSecond)
+                Math.floor((Date.now() - startTime) / 1000 / ticksPerSecond),
               ),
               distinctUntilChanged(),
               // pause implementation
@@ -199,10 +199,10 @@ export const Timer = ({
                   speak(text);
                 }
               }),
-              tap((timeLeft) => (timeLeft > 0 ? playTick() : playAlarm()))
-            )
-      )
-    )
+              tap((timeLeft) => (timeLeft > 0 ? playTick() : playAlarm())),
+            ),
+      ),
+    ),
   );
   const seconds = useObservableState(countDown$, pomodoroSeconds);
   return (
@@ -263,31 +263,18 @@ export const Title = ({ state }: { state: State }) => {
   return <div>{title}</div>;
 };
 
-const CONFIG = {
-  "300_1": [300, 5, 1],
-  "270_1": [270, 5, 1],
-  "240_1": [240, 5, 1],
-  "210_1": [210, 5, 1],
-  "180_1": [180, 5, 1],
-  "150_1": [150, 5, 1],
-  "120_1": [120, 5, 1],
-  "100_1": [100, 5, 1],
-  "090_1": [90, 5, 1],
-  "060_1": [60, 5, 1],
-  "045_1": [45, 5, 1],
-  "030_1": [30, 5, 1],
-  "030_2": [30, 3, 2],
-  "030_3": [30, 3, 3],
-  "015_1": [15, 5, 1],
-  "015_3": [15, 3, 3],
-} as const;
-
-export default function App() {
+export default function App({
+  configList,
+  config: initialConfig = "180_1",
+}: {
+  configList: Record<string, [number, number, number]>;
+  config?: string;
+}) {
   const [state, setState] = useState<State>("reset");
-  const [config, setConfig] = useState(() => "180_1");
+  const [config, setConfig] = useState(() => initialConfig);
   const [ticks, start, ticksPerSecond] = useMemo(
-    () => CONFIG[config as keyof typeof CONFIG],
-    [config]
+    () => configList[config],
+    [config],
   );
   const pomodoroSeconds = ticks + start;
 
@@ -304,10 +291,10 @@ export default function App() {
           value={config}
           onChange={useCallback<ChangeEventHandler<HTMLSelectElement>>(
             ({ target }) => setConfig(target.value),
-            []
+            [],
           )}
         >
-          {Object.entries(CONFIG).map(([value, label]) => (
+          {Object.entries(configList).map(([value, label]) => (
             <option key={value} value={value}>
               {label[2] === 1 ? `${label[0]}s` : `${label[0]} x ${label[2]}s`}
             </option>
