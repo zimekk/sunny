@@ -45,7 +45,7 @@ devDependencies:
     version: 18.0.0
   '@types/dom-screen-wake-lock':
     specifier: ^1.0.1
-    version: 1.0.1
+    version: 1.0.3
   '@types/node':
     specifier: 18.19.18
     version: 18.19.18
@@ -562,8 +562,8 @@ packages:
     resolution: {integrity: sha512-yOlFc+7UtL/89t2ZhjPvvB/DeAr3r+Dq58IgzsFkOAvVC6NMJXmCGjbptdXdR9qsX7pKcTL+s87FtYREi2dEEQ==}
     dev: true
 
-  /@types/dom-screen-wake-lock@1.0.1:
-    resolution: {integrity: sha512-WJQas3OFGcC8AeMzaa7FwzzbNNfanuV2R12kQYNp4BkUMghsRz5JxJ5RgVhJifhw7t0s6LvRSWZArmKbMDZ+5g==}
+  /@types/dom-screen-wake-lock@1.0.3:
+    resolution: {integrity: sha512-3Iten7X3Zgwvk6kh6/NRdwN7WbZ760YgFCsF5AxDifltUQzW1RaW+WRmcVtgwFzLjaNu64H+0MPJ13yRa8g3Dw==}
     dev: true
 
   /@types/json5@0.0.29:
