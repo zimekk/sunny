@@ -22,7 +22,7 @@ dependencies:
     version: 14.1.0(react-dom@18.2.0)(react@18.2.0)
   observable-hooks:
     specifier: ^4.2.1
-    version: 4.2.1(react-dom@18.2.0)(react@18.2.0)(rxjs@7.8.1)
+    version: 4.2.3(react-dom@18.2.0)(react@18.2.0)(rxjs@7.8.1)
   react:
     specifier: 18.2.0
     version: 18.2.0
@@ -2794,8 +2794,8 @@ packages:
       es-abstract: 1.22.2
     dev: true
 
-  /observable-hooks@4.2.1(react-dom@18.2.0)(react@18.2.0)(rxjs@7.8.1):
-    resolution: {integrity: sha512-urZ0D28+oH+SRLQoCDd68rvvJIqK3zgH/Is0nubXDc+CF6d8rbDBN7A2n9mPAax7BtCRlwtnCBnkj8UwXRDf1Q==}
+  /observable-hooks@4.2.3(react-dom@18.2.0)(react@18.2.0)(rxjs@7.8.1):
+    resolution: {integrity: sha512-d6fYTIU+9sg1V+CT0GhgoE/ntjIqcy9DGaYGE6ELGVP4ojaWIEsaLvL/05hLOM+AL7aySN4DCTLvj6dDF9T8XA==}
     peerDependencies:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
