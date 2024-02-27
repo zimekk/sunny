@@ -38,8 +38,8 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
-    "@commitlint/cli": "^18.0.0",
-    "@commitlint/config-conventional": "^18.0.0",
+    "@commitlint/cli": "^19.0.0",
+    "@commitlint/config-conventional": "^19.0.0",
     "@types/dom-screen-wake-lock": "^1.0.1",
     "@types/node": "18.19.18",
     "@types/react": "18.2.60",
