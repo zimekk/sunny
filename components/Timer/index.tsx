@@ -258,14 +258,14 @@ export const Title = ({ state }: { state: State }) => {
     state === "started"
       ? "Greatness is within sight!!"
       : state === "paused"
-      ? "Never quite, keep going!!"
-      : "Let the countdown begin!!";
+        ? "Never quite, keep going!!"
+        : "Let the countdown begin!!";
   return <div>{title}</div>;
 };
 
 export default function App({
   configList,
-  config: initialConfig = "180_1",
+  config: initialConfig = "120_1",
 }: {
   configList: Record<string, [number, number, number]>;
   config?: string;
