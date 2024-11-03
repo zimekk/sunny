@@ -23,7 +23,7 @@
     "update:browserlist": "pnpm update caniuse-lite -r",
     "update:dedupe": "pnpm dedupe",
     "update:latest": "pnpm update --interactive --latest",
-    "prepare": "husky install && next telemetry disable"
+    "prepare": "husky && next telemetry disable"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
