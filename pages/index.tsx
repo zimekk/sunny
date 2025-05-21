@@ -122,6 +122,7 @@ export default function Home(
             "015_1": [15, 5, 1],
             "015_3": [15, 3, 3],
           }}
+          config="060_1"
         />
         <Timer
           configList={{
@@ -131,7 +132,7 @@ export default function Home(
             "120_1": [120, 0, 1],
             "060_1": [60, 0, 1],
           }}
-          config="600_1"
+          config="060_1"
         />
 
         {false && (
