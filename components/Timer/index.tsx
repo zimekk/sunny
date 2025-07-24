@@ -63,7 +63,7 @@ function Clock({ seconds }: { seconds: number }) {
 // https://github.com/jorisre/react-screen-wake-lock
 function ScreenWakeLock() {
   // Create a reference for the Wake Lock.
-  const wakeLock = useRef<WakeLockSentinel | null>();
+  const wakeLock = useRef<WakeLockSentinel | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -274,7 +274,7 @@ export default function App({
   const [config, setConfig] = useState(() => initialConfig);
   const [ticks, start, ticksPerSecond] = useMemo(
     () => configList[config],
-    [config],
+    [config, configList],
   );
   const pomodoroSeconds = ticks + start;
 
