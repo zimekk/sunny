@@ -30,7 +30,7 @@
     "@fortawesome/free-solid-svg-icons": "^7.0.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "date-fns": "^4.1.0",
-    "next": "15.5.0",
+    "next": "15.5.2",
     "observable-hooks": "^4.2.4",
     "react": "19.1.1",
     "react-dom": "19.1.1",
