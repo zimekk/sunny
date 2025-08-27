@@ -15,8 +15,8 @@ importers:
         specifier: ^7.0.0
         version: 7.0.0
       '@fortawesome/react-fontawesome':
-        specifier: ^0.2.2
-        version: 0.2.6(@fortawesome/fontawesome-svg-core@7.0.0)(react@19.1.1)
+        specifier: ^3.0.0
+        version: 3.0.1(@fortawesome/fontawesome-svg-core@7.0.0)(react@19.1.1)
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
@@ -217,11 +217,12 @@ packages:
     resolution: {integrity: sha512-njSLAllkOddYDCXgTFboXn54Oe5FcvpkWq+FoetOHR64PbN0608kM02Lze0xtISGpXgP+i26VyXRQA0Irh3Obw==}
     engines: {node: '>=6'}
 
-  '@fortawesome/react-fontawesome@0.2.6':
-    resolution: {integrity: sha512-mtBFIi1UsYQo7rYonYFkjgYKGoL8T+fEH6NGUpvuqtY3ytMsAoDaPo5rk25KuMtKDipY4bGYM/CkmCHA1N3FUg==}
+  '@fortawesome/react-fontawesome@3.0.1':
+    resolution: {integrity: sha512-kpVyf85UHhQ+Y/TPyiNaUldqylhhXiVXv20z7sq+CLmhKLXWbzjIHaRPDrHIydnrL6Qq9oFwuNHq66alJdDM5Q==}
+    engines: {node: '>=20'}
     peerDependencies:
-      '@fortawesome/fontawesome-svg-core': ~1 || ~6 || ~7
-      react: ^16.3 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      '@fortawesome/fontawesome-svg-core': ~6 || ~7
+      react: ^18.0.0 || ^19.0.0
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -1840,11 +1841,6 @@ packages:
     resolution: {integrity: sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==}
     hasBin: true
 
-  semver@7.7.1:
-    resolution: {integrity: sha512-hlq8tAfn0m/61p4BVRcPzIGr6LKiMwo4VM6dGi6pt4qcRkmNzTcWq6eCEjEh+qXjkMDvPlOFFSGwQjoEa6gyMA==}
-    engines: {node: '>=10'}
-    hasBin: true
-
   semver@7.7.2:
     resolution: {integrity: sha512-RF0Fw+rO5AMf9MAyaRXI4AV0Ulj5lMHqVxxdSgiVbixSCXoEmmX/jk0CuJw4+3SqroYO9VoUh+HcuJivvtJemA==}
     engines: {node: '>=10'}
@@ -2195,7 +2191,7 @@ snapshots:
   '@commitlint/is-ignored@19.8.1':
     dependencies:
       '@commitlint/types': 19.8.1
-      semver: 7.7.1
+      semver: 7.7.2
 
   '@commitlint/lint@19.8.1':
     dependencies:
@@ -2333,11 +2329,11 @@ snapshots:
     dependencies:
       '@fortawesome/fontawesome-common-types': 7.0.0
 
-  '@fortawesome/react-fontawesome@0.2.6(@fortawesome/fontawesome-svg-core@7.0.0)(react@19.1.1)':
+  '@fortawesome/react-fontawesome@3.0.1(@fortawesome/fontawesome-svg-core@7.0.0)(react@19.1.1)':
     dependencies:
       '@fortawesome/fontawesome-svg-core': 7.0.0
-      prop-types: 15.8.1
       react: 19.1.1
+      semver: 7.7.2
 
   '@humanfs/core@0.19.1': {}
 
@@ -4047,8 +4043,6 @@ snapshots:
   scheduler@0.26.0: {}
 
   semver@6.3.1: {}
-
-  semver@7.7.1: {}
 
   semver@7.7.2: {}
 
