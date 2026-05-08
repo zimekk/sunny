@@ -68,7 +68,7 @@ importers:
         version: 9.1.7
       lint-staged:
         specifier: ^17.0.0
-        version: 17.0.2
+        version: 17.0.3
       prettier:
         specifier: ^3.3.3
         version: 3.8.3
@@ -1612,8 +1612,8 @@ packages:
   lines-and-columns@1.2.4:
     resolution: {integrity: sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==}
 
-  lint-staged@17.0.2:
-    resolution: {integrity: sha512-Rbr6rdmbCn1fIDHBZpn0madg0hEkdlh+QwajnL3Qq0ZUq/icAJfLGj9BVBajAXi7657ZzKQ7kobGP9S5XOHYRw==}
+  lint-staged@17.0.3:
+    resolution: {integrity: sha512-wnvMRhzC3GNpjixxleiG+pAW09dHTUgBCjMS7XouAg5E7wKUc8YdfogpF7zIgvXKDbH+452O6+XpnKm6V67rPw==}
     engines: {node: '>=22.22.1'}
     hasBin: true
 
@@ -1795,8 +1795,8 @@ packages:
   picocolors@1.1.1:
     resolution: {integrity: sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==}
 
-  picomatch@2.3.1:
-    resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
+  picomatch@2.3.2:
+    resolution: {integrity: sha512-V7+vQEJ06Z+c5tSye8S+nHUfI51xoXIXjHQ99cQtKUkQqqO1kO/KCJUfZXuB47h/YBlDhah2H3hdUGXn8ie0oA==}
     engines: {node: '>=8.6'}
 
   picomatch@4.0.4:
@@ -3870,7 +3870,7 @@ snapshots:
 
   lines-and-columns@1.2.4: {}
 
-  lint-staged@17.0.2:
+  lint-staged@17.0.3:
     dependencies:
       listr2: 10.2.1
       picomatch: 4.0.4
@@ -3916,7 +3916,7 @@ snapshots:
   micromatch@4.0.8:
     dependencies:
       braces: 3.0.3
-      picomatch: 2.3.1
+      picomatch: 2.3.2
 
   mimic-function@5.0.1: {}
 
@@ -4067,7 +4067,7 @@ snapshots:
 
   picocolors@1.1.1: {}
 
-  picomatch@2.3.1: {}
+  picomatch@2.3.2: {}
 
   picomatch@4.0.4: {}
 
