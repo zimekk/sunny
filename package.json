@@ -13,7 +13,7 @@
   "lint-staged": {
     "*.{json,js,jsx,md,scss,ts,tsx,css,yml,yaml}": "prettier --write"
   },
-  "packageManager": "pnpm@12.16.1",
+  "packageManager": "pnpm@12.18.0",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
